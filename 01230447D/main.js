@@ -1,6 +1,5 @@
 const errorMess = (message) => {
   iziToast.error({
-    // title: "Error",
     message: message,
     position: "topRight",
   });
@@ -8,26 +7,22 @@ const errorMess = (message) => {
 
 const successMess = (message) => {
   iziToast.success({
-    // title: "Success",
     message: message,
     position: "topRight",
   });
 };
 
 document.getElementById("btn").addEventListener("click", (e) => {
-  e.preventDefault();
-  let name = document.getElementById("name");
-  let email = document.getElementById("email");
-  let text = document.getElementById("email");
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
 
-  name = name.value.trim();
-  email = email.value.trim();
-  text = text.value.trim();
-
-  if (!name || !email || !text) {
-    errorMess("All input feilds are required ");
+  if (!name || !email || !message) {
+    e.preventDefault(); // Only prevent if inputs are empty
+    errorMess("All input fields are required");
     return;
   }
 
-  successMess("Thank you for contacting me, I will get back to you shortly");
+  // Show success toast, but allow form to submit to Formspree
+  successMess("Thank you for contacting me! Sending message...");
 });
