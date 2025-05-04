@@ -12,7 +12,9 @@ const successMess = (message) => {
   });
 };
 
-document.getElementById("btn").addEventListener("click", (e) => {
+document.getElementById("contact-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
   const nameInput = document.getElementById("name");
   const emailInput = document.getElementById("email");
   const messageInput = document.getElementById("message");
@@ -22,11 +24,28 @@ document.getElementById("btn").addEventListener("click", (e) => {
   const message = messageInput.value.trim();
 
   if (!name || !email || !message) {
-    e.preventDefault(); // Prevent form from submitting if any field is empty
     errorMess("All input fields are required");
     return;
   }
 
-  // Show success toast (form will still submit to Formspree)
-  successMess("Thank you for contacting me! Sending message...");
+  try {
+    const response = await fetch("https://formspree.io/f/mpwdpvnv", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ name, email, message })
+    });
+
+    if (response.ok) {
+      successMess("Thank you for contacting me! Your message has been sent.");
+      nameInput.value = "";
+      emailInput.value = "";
+      messageInput.value = "";
+    } else {
+      errorMess("Something went wrong. Please try again.");
+    }
+  } catch (err) {
+    errorMess("Network error. Please check your connection.");
+  }
 });
