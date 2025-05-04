@@ -13,20 +13,16 @@ const successMess = (message) => {
 };
 
 document.getElementById("btn").addEventListener("click", (e) => {
-  const nameInput = document.getElementById("name");
-  const emailInput = document.getElementById("email");
-  const messageInput = document.getElementById("message");
-
-  const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
-  const message = messageInput.value.trim();
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("message").value.trim();
 
   if (!name || !email || !message) {
-    e.preventDefault(); // Prevent form from submitting if any field is empty
+    e.preventDefault(); // Only prevent if inputs are empty
     errorMess("All input fields are required");
     return;
   }
 
-  // Show success toast (form will still submit to Formspree)
+  // Show success toast, but allow form to submit to Formspree
   successMess("Thank you for contacting me! Sending message...");
 });
