@@ -12,11 +12,14 @@ const successMess = (message) => {
   });
 };
 
-document.getElementById("btn").addEventListener("click", (e) => {
-  e.preventDefault()
-  const name = document.getElementById("name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const message = document.getElementById("message").value.trim();
+document.getElementById("btn").addEventListener("click", () => {
+  let name = document.getElementById("name");
+  let email = document.getElementById("email");
+  let message = document.getElementById("message");
+
+  name = name.value.trim();
+  email = email.value.trim();
+  message = message.value.trim();
 
   if (!name || !email || !message) {
     e.preventDefault(); // Only prevent if inputs are empty
@@ -26,4 +29,7 @@ document.getElementById("btn").addEventListener("click", (e) => {
 
   // Show success toast, but allow form to submit to Formspree
   successMess("Thank you for contacting me! Sending message...");
+  name.value = "";
+  email.value = "";
+  message.value = "";
 });
